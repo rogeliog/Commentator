@@ -3,26 +3,28 @@ class window.Commentator
   constructor: (args) ->
     @el  = args.el
     @url = args.url
-    @poster   = args.poster || new Commentator.Poster
+    @poster   = args.poster   || new Commentator.Poster
     @comments = args.comments || @fetch_comments()
-    @comment_template = args.comment_template || CommentatorTemplates.comment
-    @comments_form_template = args.comments_form_template || CommentatorTemplates.comments_form
-    @reply_template = args.reply_template || CommentatorTemplates.reply
-    @replies_form_template = args.replies_form_template || CommentatorTemplates.replies_form
-    @set_display_form(args.display_form)
+
+    @set_display_form(args)
+    @set_templates(args)
 
     @el.delegate ".comments_form", "submit", @add_comment
 
     @render_comments()
+    @render_form() if @display_form and @url?
 
-    if @display_form and @url?
-      @render_form()
-
-  set_display_form: (display_form_value) ->
-    if display_form_value?
-      @display_form = display_form_value
+  set_display_form: (args) ->
+    if args.display_form?
+      @display_form = args.display_form
     else
       @display_form = true
+
+  set_templates: (args) ->
+    @comment_template = args.comment_template || CommentatorTemplates.comment
+    @reply_template   = args.reply_template   || CommentatorTemplates.reply
+    @comments_form_template = args.comments_form_template || CommentatorTemplates.comments_form
+    @replies_form_template  = args.replies_form_template  || CommentatorTemplates.replies_form
 
   fetch_comments: ->
     @el.data "comments"
