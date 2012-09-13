@@ -34,3 +34,5 @@ all other attributes in the json are attributes that you can use in your "commen
   replies_url: "/comments/3/replies"
 }
 ```
+
+You can see Postduino (https://github.com/bhserna/Postduino) as an example to use Commentator in a Rails app.
